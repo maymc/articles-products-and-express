@@ -1,0 +1,21 @@
+ {{#if productItems}}
+<h1 class="sectionName">Products</h1>
+{{#each productItems}}
+<div>
+  <a class="item" href="/products/{{id}}">{{name}}</a>
+</div>
+{{/each}}
+<br><br>
+<a class="add" href="/products/new"><i class="fas fa-plus"></i> Add a new product</a>
+{{/if}} {{#if articleItems}}
+<h1 class="sectionName">Articles</h1>
+{{#each articleItems}}
+<div>
+  <a class="item" href="/articles/{{title}}">{{title}}</a>
+</div>
+{{/each}}
+<br><br>
+<a class="add" href="/articles/new"><i class="fas fa-plus"></i> Add a new article</a>
+{{/if}}
+
+<br><br> {{> footer}}

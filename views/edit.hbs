@@ -1,0 +1,108 @@
+ {{#with editProductItem}}
+<form action="/products/{{id}}?_method=PUT" method="post">
+  <h1 class="sectionName">Editing Product:</h1>
+  <label>Name:<br>
+    <textarea name="name" id="">{{name}}</textarea>
+  </label>
+  <br>
+  <label>Price:<br>
+    <textarea name="price" id="">{{price}}</textarea>
+  </label>
+  <br>
+  <label>Inventory:<br>
+    <textarea name="inventory" id="">{{inventory}}</textarea>
+  </label>
+  <br><br>
+  <input class="submitBtn" type="submit" value="Submit"> {{/with}}
+</form>
+
+{{#with editProductItem}}
+<form action="/products/{{id}}?_method=DELETE" method="post">
+  <input class="submitBtn" type="submit" value="Delete Product">
+  <br><br>
+  <a class="redirect" href="/products"><i class="fas fa-arrow-circle-left"></i> Back to Products</a>
+  {{/with}}
+</form>
+
+{{#with productToEdit}}
+<h1>Error w/editing product. Please try again.</h1>
+<form action="/products/{{id}}?_method=PUT" method="post">
+  <h1 class="sectionName">Editing Product:</h1>
+  <label>Name:<br>
+    <textarea name="name" id="">{{name}}</textarea>
+  </label>
+  <br>
+  <label>Price:<br>
+    <textarea name="price" id="">{{price}}</textarea>
+  </label>
+  <br>
+  <label>Inventory:<br>
+    <textarea name="inventory" id="">{{inventory}}</textarea>
+  </label>
+  <br><br>
+  <input class="submitBtn" type="submit" value="Submit"> {{/with}}
+</form>
+
+{{#with productToEdit}}
+<form action="/products/{{id}}?_method=DELETE" method="post">
+  <input class="submitBtn" type="submit" value="Delete Product">
+  <br><br>
+  <a class="redirect" href="/products"><i class="fas fa-arrow-circle-left"></i> Back to Products</a>
+  {{/with}}
+</form>
+
+
+{{#with editArticleItem}}
+<form action="/articles/{{title}}?_method=PUT" method="post">
+  <h1 class="sectionName">Editing Article:</h1>
+  <label>Title:<br>
+    <textarea name="title" id="">{{title}}</textarea>
+  </label>
+
+  <label>Body:<br>
+    <textarea name="body" id="">{{body}}</textarea>
+  </label>
+
+  <label>Author:<br>
+    <textarea name="author" id="">{{author}}</textarea>
+  </label>
+
+  <br><br>
+  <input class="submitBtn" type="submit" value="Submit"> {{/with}}
+</form>
+
+{{#with editArticleItem}}
+<form action="/articles/{{title}}?_method=DELETE" method="post">
+  <input class="submitBtn" type="submit" value="Delete Article">
+  <br><br>
+  <a class="redirect" href="/articles"><i class="fas fa-arrow-circle-left"></i> Back to Articles</a>
+  {{/with}}
+</form>
+
+{{#with articleToEdit}}
+<h1>Error w/editing article. Please try again.</h1>
+<form action="/articles/{{title}}?_method=PUT" method="post">
+  <h1 class="sectionName">Editing Article:</h1>
+  <label>Title:<br>
+    <textarea name="title" id="">{{title}}</textarea>
+  </label>
+
+  <label>Body:<br>
+    <textarea name="body" id="">{{body}}</textarea>
+  </label>
+
+  <label>Author:<br>ß
+    <textarea name="author" id="">{{author}}</textarea>
+  </label>
+
+  <br><br>
+  <input class="submitBtn" type="submit" value="Submit"> {{/with}}
+</form>
+
+{{#with articleToEdit}}
+<form action="/articles/{{title}}?_method=DELETE" method="post">
+  <input class="submitBtn" type="submit" value="Delete Article">
+  <br><br>
+  <a class="redirect" href="/articles"><i class="fas fa-arrow-circle-left"></i> Back to Articles</a>
+  {{/with}}
+</form>

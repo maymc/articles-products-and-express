@@ -1,0 +1,121 @@
+body {
+  margin-top: 100px;
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: azure; }
+
+#title {
+  text-align: center;
+  font-family: 'Cabin Sketch', cursive;
+  font-size: 2em;
+  color: coral; }
+
+#content {
+  text-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center; }
+
+#products, #articles {
+  padding: 20px; }
+
+img:hover {
+  opacity: 0.7; }
+
+.selectedItem {
+  padding: 20px;
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 3em;
+  color: #ffa4d2;
+  margin: auto; }
+
+.sectionName {
+  padding: 20px;
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 3em;
+  color: coral;
+  margin: auto; }
+
+.item {
+  color: black;
+  font-family: 'Comfortaa', cursive;
+  font-size: 1.5em;
+  text-align: center;
+  display: block;
+  font-weight: bold; }
+
+.item:hover {
+  color: lightcoral; }
+
+.add, .edit, .redirect {
+  font-family: 'Comfortaa', cursive;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  color: steelblue; }
+
+.add:hover {
+  color: hotpink; }
+
+.edit:hover {
+  color: lightcoral; }
+
+.redirect:hover {
+  color: mediumaquamarine; }
+
+p {
+  padding: 20px;
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 3em;
+  color: black;
+  margin: auto; }
+
+p:hover {
+  color: lightcoral; }
+
+a:link {
+  text-decoration: none; }
+
+h1 {
+  text-align: center;
+  color: coral; }
+
+h2 {
+  color: black;
+  text-align: center;
+  font-family: 'Comfortaa', cursive; }
+
+textarea {
+  width: 300px;
+  height: 50px;
+  word-wrap: break-word;
+  font-size: 1em; }
+
+form {
+  margin: 0 auto 0 auto;
+  width: 306px; }
+
+label {
+  font-family: 'Comfortaa', cursive;
+  color: steelblue;
+  font: 5em;
+  font-weight: bold;
+  text-align: center; }
+
+input[type=submit] {
+  background-color: white;
+  border: 2px solid lightcoral;
+  border-radius: 15px;
+  font-size: 1.5em;
+  padding: 15px 25px;
+  margin: 10px 0;
+  border-radius: 15px;
+  box-shadow: 0 3px #999; }
+
+input[type=submit]:hover {
+  background-color: lightcoral;
+  color: white; }
+
+input[type=submit]:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px); }

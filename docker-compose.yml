@@ -1,0 +1,5 @@
+version: '3'
+services:
+  my-app:
+    build: .
+    image: maymc/articles-products-and-express:local
