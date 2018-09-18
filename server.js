@@ -1,21 +1,12 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 8002;
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 
-//Knex setup
-// const knex = require('./knex/knex.js');
-
 //Routes setup for products and articles
 const productRoutes = require('./routes/products.js');
 const articleRoutes = require('./routes/articles.js');
-
-const Products = require('./db/products.js');
-const DB_Products = new Products();
-const Articles = require('./db/articles.js');
-const DB_Articles = new Articles();
 
 //Tells Express to use a static directory that we define as the location to look for requests
 app.use(express.static("public"));
@@ -34,10 +25,7 @@ app.use(methodOverride('_method'));
 
 //Render all products and articles; a homepage
 app.get("/", (req, res) => {
-  const allProducts = DB_Products.all();
-  const allArticles = DB_Articles.all();
-  console.log("\nProducts:\n", allProducts);
-  console.log("\nArticles:\n", allArticles);
+  console.log("Rendering homepage...");
   res.render("home");
 });
 

@@ -1,4 +1,4 @@
-{{#if addingProduct}}
+{{#if isAddingProduct}}
 <form action="/products" method="post">
   <h1 class="sectionName">New Product:</h1>
   <label>Name:<br>
@@ -17,7 +17,7 @@
 </form>
 <br>
 <a class="redirect" href="/products"><i class="fas fa-arrow-circle-left"></i> Back to Products</a>
-{{/if}} {{#if addingProductError}}
+{{/if}} {{#if isAddingProductError}}
 <h1>Problem with submitting new product. Please fill in all fields and try again.</h1>
 <form action="/products" method="post">
   <h1 class="sectionName">New Product:</h1>
@@ -37,7 +37,7 @@
 </form>
 <br>
 <a class="redirect" href="/products"><i class="fas fa-arrow-circle-left"></i> Back to Products</a>
-{{/if}} {{#if addingArticle}}
+{{/if}} {{#if isAddingArticle}}
 <form action="/articles" method="post">
   <h1 class="sectionName">New Article:</h1>
   <label>Title:<br>
@@ -56,7 +56,7 @@
 </form>
 <br>
 <a class="redirect" href="/articles"><i class="fas fa-arrow-circle-left"></i> Back to Articles</a>
-<br> {{> footer}} {{/if}} {{#if addingArticleError}}
+<br> {{> footer}} {{/if}} {{#if isAddingArticleError}}
 <h1>Problem with submitting new article. Please fill in all fields and try again.</h1>
 <form action="/articles" method="post">
   <h1 class="sectionName">New Article:</h1>

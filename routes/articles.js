@@ -1,30 +1,28 @@
 //Route object that we can route our objects into
 const express = require('express');
 const Router = express.Router();
-const knex = require('../knex/knex.js');
 
 //Hardcoded database for articles
 const Articles = require('../db/articles.js');
 const DB_Articles = new Articles();
 
 //Error flag for adding an article
-let addingArticleError = false;
+let isAddingArticleError = false;
 
-////////////////////////////////////////////////////////////////////////
-//Article routes below will output HTML generated from our TEMPLATES //
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////
+//Article routes below will output HTML //
+//////////////////////////////////////////
 
 //GET '/articles/new'
 Router.get("/articles/new", (req, res) => {
   console.log("\nThis is GET /articles/new - new.hbs");
-  const addingArticle = true;
-  res.render("new", { addingArticle });
+  let isAddingArticle = true;
+  res.render("new", { isAddingArticle });
 });
 
-//GET '/articles/:title/edit'
+//GET '/articles/:title/edit'; user can update information for an article
 Router.get("/articles/:title/edit", (req, res) => {
   console.log("\nThis is GET articles - edit");
-  //console.log("req.params:", req.params);
   const { title } = req.params;
   console.log("Title for edit:", title);
   DB_Articles.getArticleByTitle(title)
@@ -34,7 +32,7 @@ Router.get("/articles/:title/edit", (req, res) => {
       res.render("edit", { editArticleItem });
     })
     .catch(err => {
-      console.log("EDIT article error:", err);
+      console.log("EDIT - article error:", err);
     });
 });
 
@@ -42,7 +40,7 @@ Router.get("/articles/:title/edit", (req, res) => {
 Router.get("/articles/:title", (req, res) => {
   console.log("\nThis is GET /articles/:title - articles.hbs");
   const { title } = req.params;
-  console.log("title:", title);
+  console.log("GETTing title:", title);
 
   DB_Articles.getArticleByTitle(title)
     .then(results => {
@@ -51,7 +49,7 @@ Router.get("/articles/:title", (req, res) => {
       res.render("article", selectedArticleItem);
     })
     .catch(err => {
-      console.log("GET ERROR:", err);
+      console.log("GET - title error:", err);
     })
 });
 
@@ -65,7 +63,7 @@ Router.get("/articles", (req, res) => {
       res.render('index', { articleItems });
     })
     .catch(err => {
-      console.log('ERROR:', err);
+      console.log('GET all articles error:', err);
     })
 });
 
@@ -87,18 +85,18 @@ Router.post("/articles", (req, res) => {
       })
   }
   else {
-    addingArticleError = true;
-    res.render("new", { addingArticleError });
+    isAddingArticleError = true;
+    res.render("new", { isAddingArticleError });
   }
 });
 
 //PUT '/articles/:title'
 Router.put("/articles/:title", (req, res) => {
-  console.log("\nreq.body @ articles PUT:\n", req.body);
-  console.log("req.params:", req.params);
+  console.log("\nPUT - req.body @ articles:\n", req.body);
+  console.log("PUT - req.params:", req.params);
   const { title } = req.params;
+
   if (req.body.title === "" || req.body.body === "" || req.body.author === "") {
-    console.log("I'm here1");
     DB_Articles.getArticleByTitle(title)
       .then(results => {
         let articleToEdit = results.rows[0];
@@ -106,17 +104,16 @@ Router.put("/articles/:title", (req, res) => {
         res.render("edit", { articleToEdit });
       })
       .catch(err => {
-        console.log("PUT articles error1:", err);
+        console.log("PUT - articles error:", err);
       });
   }
   else {
-    console.log("I'm here2");
     DB_Articles.updateArticle(title, req.body)
       .then(() => {
         res.redirect(`/articles/${req.body.title}`);
       })
       .catch(err => {
-        console.log("PUT article error2:", err);
+        console.log("PUT - article error:", err);
       });
   }
 });
@@ -124,8 +121,9 @@ Router.put("/articles/:title", (req, res) => {
 //DELETE '/articles/:title'
 Router.delete("/articles/:title", (req, res) => {
   console.log("\nThis is DELETE for articles.");
-  console.log("req.params:", req.params);
+  console.log("DELETE - req.params:", req.params);
   const { title } = req.params;
+
   DB_Articles.removeArticleByTitle(title)
     .then(() => {
       res.redirect('/articles');

@@ -2,7 +2,7 @@ class Articles {
   constructor() {
     this.knex = require('../knex/knex.js');
 
-    this._articleStorage = [];  //hardcoded data storage
+    // this._articleStorage = [];  //hardcoded data storage
 
     //Pre-added article items
     this.add({
@@ -26,46 +26,33 @@ class Articles {
 
   //Display all articles in storage
   all() {
-    // return [...this._articleStorage];
     return this.knex.raw('SELECT * FROM article_items');
   }
 
   //Display a specific article found by its title
   getArticleByTitle(title) {
-    // let filteredArray = this._articleStorage.filter(element => title == element.title)[0];
-    // console.log("filteredArray:\n", filteredArray);
-    // return filteredArray;
-    console.log("title at GET:", title);
+    console.log("GET article w/title:", title);
     return this.knex.raw(`SELECT * FROM article_items WHERE title = '${title}'`);
-  }
-
-  updateArticle(title, article) {
-    console.log("entered title:", title);
-    console.log("UPDATE article:", article);
-    return this.knex.raw(`UPDATE article_items SET title = '${article.title}', body = '${article.body}', author = '${article.author}' WHERE title = '${title}'`);
-  }
-
-  //Remove an article from the db based on its title
-  removeArticleByTitle(title) {
-    // let removedArticle = null;
-    // console.log("\narticleStorage before remove:\n", this._articleStorage);
-    // this._articleStorage.forEach((element, index) => {
-    //   if (element.title === title) {
-    //     removedArticle = this._articleStorage.splice(index, 1);
-    //   }
-    // });
-    // console.log("\narticleStorage after remove:\n", this._articleStorage);
-    console.log("REMOVE title:", title);
-    return this.knex.raw(`DELETE FROM article_items WHERE title = '${title}'`);
   }
 
   //Add a new article to the db
   add(article) {
     article.urlTitle = encodeURI(article.title);
-    //this._articleStorage.push(article);
-    //return article.urlTitle;
-    console.log("articleToAdd:\n", article);
+    console.log("ADDing article:\n", article);
     return this.knex.raw(`INSERT INTO article_items (title, body, author) VALUES ('${article.title}', '${article.body}','${article.author}')`);
+  }
+
+  //Update article by its title
+  updateArticle(title, article) {
+    console.log("UPDATE - User selected title:", title);
+    console.log("UPDATE - New article info:", article);
+    return this.knex.raw(`UPDATE article_items SET title = '${article.title}', body = '${article.body}', author = '${article.author}' WHERE title = '${title}'`);
+  }
+
+  //Remove an article from the db based on its title
+  removeArticleByTitle(title) {
+    console.log("REMOVE this article, title:", title);
+    return this.knex.raw(`DELETE FROM article_items WHERE title = '${title}'`);
   }
 }
 

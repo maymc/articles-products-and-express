@@ -1,24 +1,23 @@
 //Route object that we can route our objects into
 const express = require('express');
 const Router = express.Router();
-const knex = require('../knex/knex.js');
 
 //Hardcoded database for products
 const Products = require('../db/products.js');
 const DB_Products = new Products();
 
 //Error flag for adding a product
-let addingProductError = false;
+let isAddingProductError = false;
 
-////////////////////////////////////////////////////////////////////////
-//Product routes below will output HTML generated from TEMPLATE ENGINE//
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////
+//Product routes below will output HTML //
+//////////////////////////////////////////
 
 //GET '/products/new'; creates a new product
 Router.get("/products/new", (req, res) => {
   console.log("\nThis is GET /products/new - new.hbs");
-  const addingProduct = true;
-  res.render("new", { addingProduct });
+  let isAddingProduct = true;
+  res.render("new", { isAddingProduct });
 });
 
 //GET '/products/:id/edit'; user can update information for a product
@@ -33,7 +32,7 @@ Router.get("/products/:id/edit", (req, res) => {
       res.render("edit", { editProductItem });
     })
     .catch(err => {
-      console.log("Edit error:", err);
+      console.log("EDIT - product error:", err);
     });
 
 });
@@ -41,18 +40,17 @@ Router.get("/products/:id/edit", (req, res) => {
 //GET '/products/:id'; displays the selected product's info with the corresponding ID
 Router.get("/products/:id", (req, res) => {
   console.log("\nThis is GET /products/:id - product.hbs");
-  // console.log("req.params:\n", req.params);
   const { id } = req.params;
-  console.log("id:", id);
+  console.log("GETTing id:", id);
 
   DB_Products.getProductById(id)
     .then(results => {
-      let selectedProductItem = results.rows[0];
-      console.log("selectedProductItem:", results.rows[0]);
+      const selectedProductItem = results.rows[0];
+      console.log("selectedProductItem:", selectedProductItem);
       res.render("product", selectedProductItem);
     })
     .catch(err => {
-      console.log("GET ERROR:", err);
+      console.log("GET - id error:", err);
     });
 });
 
@@ -61,13 +59,12 @@ Router.get("/products", (req, res) => {
   console.log("\nThis is GET /products - index.hbs");
   DB_Products.all()
     .then(results => {
-      //console.log("WHAT IS THIS:", results);
       const productItems = results.rows;
       console.log("productItems:\n ", productItems);
       res.render('index', { productItems });
     })
     .catch(err => {
-      console.log('ERROR:', err);
+      console.log('GET all products error:', err);
     });
 
 });
@@ -80,7 +77,6 @@ Router.get("/products", (req, res) => {
 Router.post("/products", (req, res) => {
   console.log("\nreq.body:\n", req.body);
   if (req.body.name !== "" && req.body.price !== "" && req.body.inventory !== "") {
-    addingError = false;
     req.body.price = Number(req.body.price);
     req.body.inventory = Number(req.body.inventory);
     const newProductItem = req.body;
@@ -93,19 +89,18 @@ Router.post("/products", (req, res) => {
       })
   }
   else {
-    addingProductError = true;
-    res.render("new", { addingProductError });
+    isAddingProductError = true;
+    res.render("new", { isAddingProductError });
   }
-
 });
 
 //PUT '/products/:id'
 Router.put("/products/:id", (req, res) => {
-  console.log("\nreq.body @ products PUT:\n", req.body);
-  console.log("req.params:", req.params);
+  console.log("\nPUT - req.body @ products:\n", req.body);
+  console.log("PUT - req.params:", req.params);
   const { id } = req.params;
+
   if (req.body.name === "" || req.body.price === "" || req.body.inventory === "") {
-    console.log("I'm here1");
     DB_Products.getProductById(id)
       .then(results => {
         let productToEdit = results.rows[0];
@@ -113,17 +108,16 @@ Router.put("/products/:id", (req, res) => {
         res.render("edit", { productToEdit });
       })
       .catch(err => {
-        console.log("PUT products error1:", err);
+        console.log("PUT - products error:", err);
       });
   }
   else {
-    console.log("I'm here2");
     DB_Products.updateProduct(id, req.body)
       .then(() => {
         res.redirect(`/products/${id}`);
       })
       .catch(err => {
-        console.log("PUT product error2:", err);
+        console.log("PUT - product error:", err);
       });
   }
 });
@@ -131,8 +125,9 @@ Router.put("/products/:id", (req, res) => {
 //DELETE '/products/:id'
 Router.delete("/products/:id", (req, res) => {
   console.log("\nThis is DELETE for products.");
-  console.log("req.params:", req.params);
+  console.log("DELETE - req.params:", req.params);
   const { id } = req.params;
+
   DB_Products.removeProductById(id)
     .then(() => {
       res.redirect('/products');
