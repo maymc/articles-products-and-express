@@ -3,6 +3,18 @@ const app = express();
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
+const morgan = require('morgan');
+const winston = require('winston');
+
+//Setup for winston and morgan
+const logger = winston.createLogger({
+  level: 'info',
+  transports: [
+    new winston.transports.Console()
+  ]
+});
+
+app.use(morgan('dev'));
 
 //Routes setup for products and articles
 const productRoutes = require('./routes/products.js');
@@ -23,9 +35,23 @@ app.use(methodOverride('_method'));
 
 /////////////////////////////////////////
 
+//Implementing User Authentication
+//Render login page
+// app.get("/", (req, res) => {
+//   logger.info('Login page is up');
+//   res.render("userLogin");
+// })
+
+// //Render all products and articles; a homepage
+// app.get("/home", (req, res) => {
+
+//   logger.info('Retrieved homepage successfully!');
+//   res.render("home");
+// });
+
 //Render all products and articles; a homepage
 app.get("/", (req, res) => {
-  console.log("Rendering homepage...");
+  logger.info('Retrieved homepage successfully!');
   res.render("home");
 });
 

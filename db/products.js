@@ -5,29 +5,29 @@ class Products {
     this._count = 1;  //for id
     // this._productStorage = [];  //hardcoded data storage
 
-    //Pre-added product items
-    this.add({
-      name: 'Coffee Candy',
-      price: 3.12,
-      inventory: 28
-    });
-    this.add({
-      name: 'NutterButter',
-      price: 8.56,
-      inventory: 20
-    });
-    this.add({
-      name: 'Chocolate Chip Cookie',
-      price: 2.58,
-      inventory: 4
-    });
+    // //Pre-added product items
+    // this.add({
+    //   name: 'Coffee Candy',
+    //   price: 3.12,
+    //   inventory: 28
+    // });
+    // this.add({
+    //   name: 'NutterButter',
+    //   price: 8.56,
+    //   inventory: 20
+    // });
+    // this.add({
+    //   name: 'Chocolate Chip Cookie',
+    //   price: 2.58,
+    //   inventory: 4
+    // });
   }
 
   //Methods
 
   //Display all products in storage
   all() {
-    return this.knex.raw('SELECT * FROM product_items');
+    return this.knex.raw('SELECT * FROM product_items ORDER BY id ASC');
   }
 
   //Display a specific product based on its ID

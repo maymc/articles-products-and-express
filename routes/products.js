@@ -1,6 +1,16 @@
 //Route object that we can route our objects into
 const express = require('express');
 const Router = express.Router();
+this.knex = require('../knex/knex.js')
+
+//Setup for winston
+const winston = require('winston');
+const logger = winston.createLogger({
+  level: 'info',
+  transports: [
+    new winston.transports.Console()
+  ]
+});
 
 //Hardcoded database for products
 const Products = require('../db/products.js');
@@ -15,14 +25,14 @@ let isAddingProductError = false;
 
 //GET '/products/new'; creates a new product
 Router.get("/products/new", (req, res) => {
-  console.log("\nThis is GET /products/new - new.hbs");
+  logger.info("This is GET /products/new - new.hbs");
   let isAddingProduct = true;
   res.render("new", { isAddingProduct });
 });
 
 //GET '/products/:id/edit'; user can update information for a product
 Router.get("/products/:id/edit", (req, res) => {
-  console.log("\nThis is GET products - edit");
+  logger.info("This is GET products - edit");
   const { id } = req.params;
   console.log("ID for edit:", id);
   DB_Products.getProductById(id)
@@ -39,7 +49,7 @@ Router.get("/products/:id/edit", (req, res) => {
 
 //GET '/products/:id'; displays the selected product's info with the corresponding ID
 Router.get("/products/:id", (req, res) => {
-  console.log("\nThis is GET /products/:id - product.hbs");
+  logger.info("This is GET /products/:id - product.hbs");
   const { id } = req.params;
   console.log("GETTing id:", id);
 
@@ -56,7 +66,7 @@ Router.get("/products/:id", (req, res) => {
 
 //GET '/products'; displays all Products added thus far
 Router.get("/products", (req, res) => {
-  console.log("\nThis is GET /products - index.hbs");
+  logger.info("This is GET /products - index.hbs");
   DB_Products.all()
     .then(results => {
       const productItems = results.rows;
@@ -75,7 +85,7 @@ Router.get("/products", (req, res) => {
 
 //POST '/products'
 Router.post("/products", (req, res) => {
-  console.log("\nreq.body:\n", req.body);
+  console.log("req.body:\n", req.body);
   if (req.body.name !== "" && req.body.price !== "" && req.body.inventory !== "") {
     req.body.price = Number(req.body.price);
     req.body.inventory = Number(req.body.inventory);
@@ -96,7 +106,7 @@ Router.post("/products", (req, res) => {
 
 //PUT '/products/:id'
 Router.put("/products/:id", (req, res) => {
-  console.log("\nPUT - req.body @ products:\n", req.body);
+  console.log("PUT - req.body @ products:\n", req.body);
   console.log("PUT - req.params:", req.params);
   const { id } = req.params;
 
@@ -124,7 +134,7 @@ Router.put("/products/:id", (req, res) => {
 
 //DELETE '/products/:id'
 Router.delete("/products/:id", (req, res) => {
-  console.log("\nThis is DELETE for products.");
+  logger.info("This is DELETE for products.");
   console.log("DELETE - req.params:", req.params);
   const { id } = req.params;
 
